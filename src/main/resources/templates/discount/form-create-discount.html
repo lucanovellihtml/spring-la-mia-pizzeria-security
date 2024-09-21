@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+	
+	<main>
+		
+		<!-- SECTION TABLE INDEX -->
+		<section class="container-sm text-center">
+			<div class="row gap-4 justify-content-center">
+				
+				<!-- TITLE -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+				      <h1>Creazione Offerta per la pizza <span th:text="${discount.pizza.name}"><span> </h1>
+					  <p>Complete the form to create the discount!!!</p>
+				</div>
+				 
+				 
+				 <!-- FORM CREATION DISCOUNT -->
+				 <form class="col-12 col-lg-6" id="form-create-discount" th:object="${discount}" th:action="@{/discounts/create}" method="POST">
+					
+					
+					<!-- INPUT TITLE -->
+					<div class="mb-3">
+					   <label for="id_pizza" class="form-label">Id Pizza</label>
+					   <input type="number" class="form-control" placeholder="Disabled input" id="id_pizza" th:field="*{pizza.id}" th:value="*{pizza.id}" disable>			   
+				   </div>
+
+					
+					<!-- INPUT TITLE -->
+					<div class="mb-3">
+					   <label for="title" class="form-label">Title</label>
+					   <input type="text" class="form-control" id="title" placeholder="Insert title of discount" th:field="*{title}" th:errorClass="is-invalid">
+				   
+					   <!-- ERROR INPUT TITLE-->
+					   <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+						   <ul>
+						   		<li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+						   </ul>
+					   </div>
+					   
+				   </div>
+					 
+					 <!-- INPUT START DATE -->
+					 <div class="mb-3">
+					   <label for="startDate" class="form-label">Start Date</label>
+					   <input type="datetime-local" class="form-control" id="startDate" placeholder="Insert start date of discount" th:field="*{startDate}" th:errorClass="is-invalid">
+				   	
+					   <!-- ERROR INPUT START DATE -->
+					   <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+					      <ul>
+					      		<li th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></li>
+					      </ul>
+					   </div>
+				   
+				     </div>
+					 
+					  <!-- INPUT FINISH DATE -->
+					  <div class="mb-3">
+					    <label for="finishDate" class="form-label">Finish Date</label>
+					    <input type="datetime-local" class="form-control" id="finishDate" placeholder="Insert finish date of discount" th:field="*{finishDate}" th:errorClass="is-invalid">
+					 	
+					    <!-- ERROR INPUT START DATE -->
+					    <div th:if="${#fields.hasErrors('finishDate')}" class="invalid-feedback">
+					       <ul>
+					       		<li th:each="err : ${#fields.errors('finishDate')}" th:text="${err}"></li>
+					       </ul>
+					    </div>
+
+					   </div>
+					 
+					 <!-- BUTTON -->
+					 <div class="mb-3 d-flex justify-content-center gap-2">
+					 	<button type="submit" class="btn btn-success">Create</button>
+						<button type="reset" class="btn btn-warning">Reset</button> 
+					</div>
+					
+				 </form>
+				 
+			</div>
+			
+			 
+		</section>
+		
+		
+	</main>
+	
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>

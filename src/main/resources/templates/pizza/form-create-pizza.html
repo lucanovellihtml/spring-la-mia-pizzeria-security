@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+	
+	<main>
+		
+		<!-- SECTION TABLE INDEX -->
+		<section class="container-sm text-center">
+			<div class="row gap-4 justify-content-center">
+				
+				<!-- TITLE -->
+				<div class="col-12 pt-3 d-flex flex-column gap-3">
+				      <h1>Creazione Pizza</h1>
+					  <p>Complete the form to create the pizza!!!</p>
+				</div>
+				 
+				 
+				 <!-- FORM CREATION PIZZA -->
+				 <form class="col-12 col-lg-6" id="form-create-pizza" th:object="${pizza}" th:action="@{/pizze/create}" method="POST">
+					
+					<!-- INPUT NAME -->
+					<div class="mb-3">
+					   <label for="name" class="form-label">Name</label>
+					   <input type="text" class="form-control" id="name" placeholder="Insert name of pizza" th:field="*{name}" th:errorClass="is-invalid">
+				   
+					   <!-- ERROR INPUT NAME -->
+					   <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+						   <ul>
+						   		<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+						   </ul>
+					   </div>
+					   
+				   </div>
+				   
+				   <!-- INPUT INGREDIENT -->
+   				   <div class="mb-3">
+   					
+   						<!-- TITLE -->
+   						<span class="form-check-label">Ingredients</span>
+   					
+   					   <!--  CONDIZIONE DI DB POPOLATO -->
+   					   <th:block th:if="${ingredients.size > 0}" th:each="ingredient : ${ingredients}">
+   		   					<div class="d-flex gap-2">
+   								<input class="form-check-input" type="checkbox" th:value="${ingredient.id}" th:id="|ingredient_${ingredient.id}|" th:field="*{ingredients}">
+   								 <label class="form-check-label" th:for="|ingredient_${ingredient.id}|" th:text="${ingredient.name}">
+   								 </label>
+   		   				   </div>
+   					   </th:block>
+   				   
+   				   
+   					   <!--  CONDIZIONE DI DB NON POPOLATO -->
+   					   <th:block th:unless="${ingredients.size > 0}">
+   								<p>Ingredients not available</p>
+   					   </th:block>
+   				   </div>
+
+					 
+					 <!-- INPUT DESCRIPTION -->
+					 <div class="mb-3">
+					   <label for="description" class="form-label">Description</label>
+					   <input type="text" class="form-control" id="description" placeholder="Insert description of pizza" th:field="*{description}" th:errorClass="is-invalid">
+				   	
+					   <!-- ERROR INPUT DESCRIPTION -->
+					   <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+					      <ul>
+					      		<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+					      </ul>
+					   </div>
+				   
+				     </div>
+					 
+					 <!-- INPUT PRICE -->
+					 <div class="mb-3">
+					   <label for="price" class="form-label">Price</label>
+					   <input type="number" step="any" class="form-control" id="price" placeholder="Inser price of pizza" th:field="*{price}" th:errorClass="is-invalid">
+					 
+					   <!-- ERROR INPUT PRICE -->
+   					   <div th:if="${#fields.hasErrors('price')}" class="invalid-feedback">
+   						   <ul>
+   						   		<li th:each="err : ${#fields.errors('price')}" th:text="${err}"></li>
+   						   </ul>
+   					   </div>
+					   
+				   	</div>
+					 
+					 <!-- BUTTON -->
+					 <div class="mb-3 d-flex justify-content-center gap-2">
+					 	<button type="submit" class="btn btn-success">Create</button>
+						<button type="reset" class="btn btn-warning">Reset</button> 
+					</div>
+					
+				 </form>
+				 
+			</div>
+			
+			 
+		</section>
+		
+		
+	</main>
+	
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>

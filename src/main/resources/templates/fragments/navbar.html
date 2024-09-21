@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+
+<html xmlns="http://www.thymeleaf.org">
+	
+<body>
+	
+	<header>
+		<nav th:fragment="navbar" class="navbar navbar-expand-sm bg-body-tertiary">
+		  <div class="container-fluid">
+			
+			<!-- TITLE -->
+		    <a class="navbar-brand" th:href="@{/}">Pizza</a>
+			
+			<!-- TITLE -->
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+			
+			<!-- MENU' -->
+		    <div class="collapse navbar-collapse" id="navbarNav">
+		      <ul class="navbar-nav">
+				
+				<!-- LIST PIZZA -->
+		        <li class="nav-item">
+		          <a class="nav-link active" aria-current="page" th:href="@{/pizze}">Index</a>
+		        </li>
+				
+				<!-- CREATE PIZZA -->
+				<li class="nav-item">
+				  <a class="nav-link active" aria-current="page" th:href="@{/pizze/create}">Create</a>
+				</li>
+				
+				<!-- LIST INGREDIENT -->
+				<li class="nav-item">
+				  <a class="nav-link active" aria-current="page" th:href="@{/ingredients}">Ingredients</a>
+				</li>
+				
+		      </ul>
+		    </div>
+			
+		  </div>
+		</nav>
+	</header>
+		
+</body>
+
+</html>

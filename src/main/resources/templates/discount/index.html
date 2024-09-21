@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar('pizze')}">
+	</header>
+	
+	<main>
+		
+		<!-- SECTION TABLE INDEX -->
+		<section class="container-sm text-center">
+			<div class="row gap-5">
+				
+				<!-- TITLE -->
+				<div class="col-12 pt-3">
+				      <h1>Lista Pizze</h1>
+				 </div>
+				 
+				 <!-- ALERT SUCCES DELETE -->
+				 <th:block th:if="${successMessage != null}">
+					<div class="col-12 pt-3 d-flex justify-content-center">
+						<div th:replace="~{fragments/fragments :: successAlert(${successMessage})}"></div>
+					</div>
+				 </th:block>
+				 
+				 
+				 <!-- CONDIZIONE DI DB POPOLATO -->
+				<th:block th:if="${pizze.size > 0}">
+					
+					<!-- INPUT SEARCH -->
+					<div class="col-12 col-lg-6">
+						<form th:action="@{/pizze}" method="GET">
+							<div class=" input-group mb-3 mb-3">
+							  <input type="text" class="form-control" name="name" placeholder="Insert specific name pizza">
+							  <button type="submit" class="btn btn-primary">Search</button>
+						  </div>
+					   </form>
+					 </div>
+
+				
+					 <!-- TABLE -->
+					 <div class="col-12">
+						<table class="table">
+							
+						  <!-- COLUMN -->
+						  <thead>
+						    <tr>
+						      <th class="d-none d-sm-table-cell" scope="col">#</th>
+						      <th scope="col">Name</th>
+						      <th class="d-none d-md-table-cell" scope="col">Description</th>
+							  <th class="d-none d-md-table-cell" scope="col">Photo</th>
+							  <th scope="col">Price</th>
+							  <th class="d-none d-md-table-cell" scope="col">Show</th>
+							  <th class="d-none d-md-table-cell" scope="col">Update</th>
+							  <th class="d-none d-md-table-cell" scope="col">Delete</th>
+							  <th class="d-md-none" scope="col">Action</th>
+						    </tr>
+						  </thead>
+						  
+						  <!-- ROW -->
+						  <tbody>
+						    <tr th:each="pizza : ${pizze}">
+							
+							  <!-- ID -->	
+						      <td class="d-none d-sm-table-cell" th:text="${pizza.id}"></td>
+							  
+							  <!-- NAME -->
+						      <td th:text="${pizza.name}"></td>
+							  
+							  <!-- DESCRIPTION -->
+						      <td class="d-none d-md-table-cell" th:text="${pizza.description}"></td>
+							  
+							  <!-- IMG -->
+							  <td class="d-none d-md-table-cell">
+								<img class="w-100" style="max-width: 150px; height: auto;" alt="logo" th:if="${pizza.photo} != null" th:src="@{'/img/'+${pizza.photo}}" />
+								<img class="w-100" style="max-width: 150px; height: auto;" alt="logo" th:unless="${pizza.photo} != null" th:src="@{/img/pizza_img_default.png}" /> 
+							</td>
+							  
+							  <!-- PRICE -->
+						      <td th:text="${pizza.price}"></td>
+							  
+							  <!-- BUTTON SHOW -->
+							  <td class="d-none d-md-table-cell">
+								<a th:href="@{/pizze/show/{id}(id=${pizza.id})}" class="btn btn-success">SHOW</a>
+							  </td>
+							  
+							  <!-- BUTTON UPDATE -->
+							  <td class="d-none d-md-table-cell">
+							  	<a th:href="@{/pizze/edit/{id}(id=${pizza.id})}" class="btn btn-warning">UPDATE</a>
+							  </td>
+							  
+							  <!-- BUTTON MODAL -->
+							  <td class="d-none d-md-table-cell">
+								<!-- BUTTON TRIGGER MODAL -->
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${pizza.id}">
+								 DELETE
+								</button>
+
+								<!-- MODAL -->
+								<div class="modal fade" th:id="'modal-delete-' + ${pizza.id}" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+								  <div class="modal-dialog modal-fullscreen-sm-down">
+								    <div class="modal-content">
+										
+								      <div class="modal-header">
+								        <h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE OF DELETE THIS PIZZA?</h1>
+								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div>
+									  
+								      <div class="modal-body">
+								        Deleting pizza...
+								      </div>
+									  
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+										
+										<!-- FORM DELETE BUTTON -->
+										<form class="d-inline-block" th:action="@{/pizze/delete/{id}(id=${pizza.id})}" method="POST">
+											<button type="submit" class="btn btn-danger">YES</button>
+										</form>
+										
+								      </div>
+								    </div>
+								  </div>
+								</div>
+							  </td>
+							  
+							  <!-- BUTTON ACTION SIZE PHONE -->
+							  <td class="d-md-none d-flex flex-column gap-2 align-items-center">
+								
+									<!-- BUTTON SHOW -->
+									<a th:href="@{/pizze/show/{id}(id=${pizza.id})}" style="text-decoration: none;">
+										<button type="button" class="btn btn-success" style="max-width: 80px;">SHOW</button>
+									</a>
+	
+									<!-- BUTTON UPDATE -->
+									<a th:href="@{/pizze/edit/{id}(id=${pizza.id})}" style="text-decoration: none;">
+										<button type="button" class="btn btn-warning" style="max-width: 80px;">UPDATE</button>
+									</a>
+	
+									<!-- BUTTON TRIGGER MODAL -->
+									<button type="button" class="btn btn-danger" style="max-width: 80px;" data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${pizza.id}">
+									 DELETE
+									</button>
+	
+									<!-- MODAL -->
+									<div class="modal fade" th:id="'modal-delete-' + ${pizza.id}" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+											
+									      <div class="modal-header">
+									        <h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE OF DELETE THIS PIZZA?</h1>
+									        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									      </div>
+										  
+									      <div class="modal-body">
+									        Deleting pizza...
+									      </div>
+										  
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+											
+											<!-- FORM DELETE BUTTON -->
+											<form class="d-inline-block" th:action="@{/pizze/delete/{id}(id=${pizza.id})}" method="POST">
+												<button type="submit" class="btn btn-danger">YES</button>
+											</form>
+											
+									      </div>
+									    </div>
+									  </div>
+									</div>
+								
+							  </td>
+							  
+						    </tr>
+						  </tbody>
+						  
+						</table>
+					 </div>
+					 
+				 </th:block> 
+				 
+				 
+				 <!--  CONDIZIONE DI DB NON POPOLATO -->
+				 <th:block th:unless="${pizze.size > 0}">
+					
+				 	<!-- ERROR -->
+					<div class="col-12 justify-content-center position-absolute top-50 start-50 translate-middle">
+						
+						<!-- TITLE -->
+						<h3 class="fw-bold pb-3">Pizze non presenti</h3>
+						
+						<!-- SPINNER -->
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+						
+					</div>
+					
+				 </th:block>
+				 
+			</div>
+		</section>
+		
+		
+	</main>
+	
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>

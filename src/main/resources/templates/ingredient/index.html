@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.thymeleaf.org">
+
+<head th:insert="~{fragments/fragments :: head}">
+</head>
+
+
+<body>
+
+	<header th:insert="~{fragments/navbar :: navbar}">
+	</header>
+	
+	<main>
+		
+		<!-- SECTION TABLE INDEX -->
+		<section class="container-sm text-center">
+			<div class="row gap-5">
+				
+				<!-- TITLE -->
+				<div class="col-12 pt-3">
+				      <h1>Lista Ingredienti</h1>
+				 </div>
+				 
+				 <!-- ALERT SUCCESS DELETE -->
+				 <th:block th:if="${successMessageDelete != null}">
+					<div class="col-12 pt-3 d-flex justify-content-center">
+						<div th:replace="~{fragments/fragments :: successAlertDelete(${successMessageDelete})}"></div>
+					</div>
+				 </th:block>
+				 
+				 <!-- ALERT SUCCESS CREATE -->
+				 <th:block th:if="${successMessageCreate != null}">
+				 <div class="col-12 pt-3 d-flex justify-content-center">
+				 	<div th:replace="~{fragments/fragments :: successAlertCreate(${successMessageCreate})}"></div>
+				 </div>
+				 </th:block>
+				 
+				 <!-- CONDIZIONE DI DB POPOLATO -->
+				<th:block th:if="${ingredients.size > 0}">
+					
+				
+					<!-- BUTTON CREATE -->
+					<div class="col-12 col-lg-6 d-flex justify-content-center justify-content-md-start">
+						<a th:href="@{/ingredients/create}" style="text-decoration: none;">
+							<button type="button" class="btn btn-primary">CREATE A NEW INGREDIENT</button>
+						</a>
+					 </div>
+				
+					 <!-- TABLE -->
+					 <div class="col-12">
+						<table class="table">
+							
+						  <!-- COLUMN -->
+						  <thead>
+						    <tr>
+						      <th class="d-none d-sm-table-cell" scope="col">#</th>
+						      <th scope="col">Name</th>
+							  <th class="d-none d-md-table-cell" scope="col">Show</th>
+							  <th class="d-none d-md-table-cell" scope="col">Delete</th>
+							  <th class="d-md-none" scope="col">Action</th>
+						    </tr>
+						  </thead>
+						  
+						  <!-- ROW -->
+						  <tbody>
+						    <tr th:each="ingredient : ${ingredients}">
+							
+							  <!-- ID -->	
+						      <td class="d-none d-sm-table-cell" th:text="${ingredient.id}"></td>
+							  
+							  <!-- NAME -->
+						      <td th:text="${ingredient.name}"></td>
+							  
+							  <!-- BUTTON SHOW -->
+							  <td class="d-none d-md-table-cell">
+								<a th:href="@{/ingredients/show/{id}(id=${ingredient.id})}" class="btn btn-success">SHOW</a>
+							  </td>
+							  
+							  <!-- BUTTON MODAL -->
+							  <td class="d-none d-md-table-cell">
+								<!-- BUTTON TRIGGER MODAL -->
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${ingredient.id}">
+								 DELETE
+								</button>
+
+								<!-- MODAL -->
+								<div class="modal fade" th:id="'modal-delete-' + ${ingredient.id}" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+								  <div class="modal-dialog modal-fullscreen-sm-down">
+								    <div class="modal-content">
+										
+								      <div class="modal-header">
+								        <h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE OF DELETE THIS INGREDIENT?</h1>
+								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div>
+									  
+								      <div class="modal-body">
+								        Deleting ingredient...
+								      </div>
+									  
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+										
+										<!-- FORM DELETE BUTTON -->
+										<form class="d-inline-block" th:action="@{/ingredients/delete/{id}(id=${ingredient.id})}" method="POST">
+											<button type="submit" class="btn btn-danger">YES</button>
+										</form>
+										
+								      </div>
+								    </div>
+								  </div>
+								</div>
+							  </td>
+							  
+							  <!-- BUTTON ACTION SIZE PHONE -->
+							  <td class="d-md-none d-flex flex-column gap-2 align-items-center">
+								
+									<!-- BUTTON SHOW -->
+									<a th:href="@{/ingredients/show/{id}(id=${ingredient.id})}" style="text-decoration: none;">
+										<button type="button" class="btn btn-success" style="max-width: 80px;">SHOW</button>
+									</a>
+								
+									<!-- BUTTON TRIGGER MODAL -->
+									<button type="button" class="btn btn-danger" style="max-width: 80px;" data-bs-toggle="modal" th:data-bs-target="'#modal-delete-' + ${ingredient.id}">
+									 DELETE
+									</button>
+	
+									<!-- MODAL -->
+									<div class="modal fade" th:id="'modal-delete-' + ${ingredient.id}" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+											
+									      <div class="modal-header">
+									        <h1 class="modal-title fs-5" id="exampleModalLabel">ARE YOU SURE OF DELETE THIS INGREDIENT?</h1>
+									        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									      </div>
+										  
+									      <div class="modal-body">
+									        Deleting ingredient...
+									      </div>
+										  
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO</button>
+											
+											<!-- FORM DELETE BUTTON -->
+											<form class="d-inline-block" th:action="@{/ingredients/delete/{id}(id=${ingredient.id})}" method="POST">
+												<button type="submit" class="btn btn-danger">YES</button>
+											</form>
+											
+									      </div>
+									    </div>
+									  </div>
+									</div>
+								
+							  </td>
+							  
+						    </tr>
+						  </tbody>
+						  
+						</table>
+					 </div>
+					 
+				 </th:block> 
+				 
+				 
+				 <!--  CONDIZIONE DI DB NON POPOLATO -->
+				 <th:block th:unless="${ingredients.size > 0}">
+					
+				 	<!-- ERROR -->
+					<div class="col-12 justify-content-center position-absolute top-50 start-50 translate-middle">
+						
+						<!-- TITLE -->
+						<h3 class="fw-bold pb-3">Ingredienti non presenti</h3>
+						
+						<!-- SPINNER -->
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+						
+					</div>
+					
+				 </th:block>
+				 
+			</div>
+		</section>
+		
+		
+	</main>
+	
+</body>
+
+
+<th:block th:replace="~{fragments/fragments :: scripts}">
+</th:block>
+
+
+</html>
