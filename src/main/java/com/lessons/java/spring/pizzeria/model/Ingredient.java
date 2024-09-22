@@ -11,8 +11,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-
-
 //ENTITA' INGREDIENTE;
 @Entity
 @Table(name = "ingredients")
@@ -21,18 +19,18 @@ public class Ingredient {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@NotNull
-	@Size(min=2, max=255)
+	@Size(min = 2, max = 255)
 	private String name;
-	
+
 	// 1 - OGGETTO PER STABILIRE LA RELAZIONE CON L'ALTRA ENTITA';
-	// 2 - DENTRO AL "mappedBy" FACCIO RIFERIMENTO ALLA VARIABILE D'ISTANZA CHE E' PRESENTE NELL'ENTITA'(PIZZA) A CUI E' COLLEGATA L'INGREDIENTE;
-	@ManyToMany(mappedBy="ingredients")
+	// 2 - DENTRO AL "mappedBy" FACCIO RIFERIMENTO ALLA VARIABILE D'ISTANZA CHE E'
+	// PRESENTE NELL'ENTITA'(PIZZA) A CUI E' COLLEGATA L'INGREDIENTE;
+	@ManyToMany(mappedBy = "ingredients")
 	private List<Pizza> pizze;
 
-	
-	//GETTER - SETTER
+	// GETTER - SETTER
 	public Integer getId() {
 		return id;
 	}
@@ -56,5 +54,5 @@ public class Ingredient {
 	public void setPizze(List<Pizza> pizze) {
 		this.pizze = pizze;
 	}
-	
+
 }

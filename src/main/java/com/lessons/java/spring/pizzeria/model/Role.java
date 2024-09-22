@@ -10,11 +10,11 @@ public class Role {
 
 	@Id
 	private Integer id;
-	
+
 	@NotNull
 	private String name;
 
-	//GETTER - SETTER
+	// GETTER - SETTER
 	public Integer getId() {
 		return id;
 	}
@@ -30,5 +30,5 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }

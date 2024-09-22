@@ -8,26 +8,24 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotNull;
 
-
 //ENTITA' USER PER L'AUTENTICAZIONE
 @Entity
 public class User {
 
 	@Id
 	private Integer id;
-	
+
 	@NotNull
 	private String username;
-	
+
 	@NotNull
 	private String password;
-	
-	//EAGER ---> RECUPERO DI TUTTI I RUOLI CONNESSI ALL'UTENTE;
+
+	// EAGER ---> RECUPERO DI TUTTI I RUOLI CONNESSI ALL'UTENTE;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<Role> roles;
 
-	
-	//GETTER - SETTER
+	// GETTER - SETTER
 	public Integer getId() {
 		return id;
 	}
@@ -59,5 +57,5 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 }

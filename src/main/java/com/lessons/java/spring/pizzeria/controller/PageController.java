@@ -14,5 +14,5 @@ public class PageController {
 	public String homePage(Model model) {
 		return "/pages/homepage";
 	}
-	
+
 }

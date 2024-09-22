@@ -9,55 +9,57 @@
 
 	<header th:insert="~{fragments/navbar :: navbar}">
 	</header>
-	
+
 	<main>
-		
+
 		<!-- SECTION TABLE INDEX -->
 		<section class="container-sm text-center">
 			<div class="row gap-4 justify-content-center">
-				
+
 				<!-- TITLE -->
 				<div class="col-12 pt-3 d-flex flex-column gap-3">
-				      <h1>Creazione Ingrediente</h1>
-					  <p>Complete the form to create the ingredient!!!</p>
+					<h1>Creazione Ingrediente</h1>
+					<p>Complete the form to create the ingredient!!!</p>
 				</div>
-				 
-				 
-				 <!-- FORM CREATION INGREDIENT -->
-				 <form class="col-12 col-lg-6" id="form-create-ingredient" th:object="${ingredient}" th:action="@{/ingredients/create}" method="POST">
-					
-					
+
+
+				<!-- FORM CREATION INGREDIENT -->
+				<form class="col-12 col-lg-6" id="form-create-ingredient" th:object="${ingredient}"
+					th:action="@{/ingredients/create}" method="POST">
+
+
 					<!-- INPUT NAME -->
 					<div class="mb-3">
-					   <label for="title" class="form-label">NAME</label>
-					   <input type="text" class="form-control" id="title" placeholder="Insert name of ingredient" th:field="*{name}" th:errorClass="is-invalid">
-				   
-					   <!-- ERROR INPUT NAME -->
-					   <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
-						   <ul>
-						   		<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
-						   </ul>
-					   </div>
-					   
-				   </div>
-					 
-					 
-					 <!-- BUTTON -->
-					 <div class="mb-3 d-flex justify-content-center gap-2">
-					 	<button type="submit" class="btn btn-success">Create</button>
-						<button type="reset" class="btn btn-warning">Reset</button> 
+						<label for="title" class="form-label">NAME</label>
+						<input type="text" class="form-control" id="title" placeholder="Insert name of ingredient"
+							th:field="*{name}" th:errorClass="is-invalid">
+
+						<!-- ERROR INPUT NAME -->
+						<div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+							<ul>
+								<li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+							</ul>
+						</div>
+
 					</div>
-					
-				 </form>
-				 
+
+
+					<!-- BUTTON -->
+					<div class="mb-3 d-flex justify-content-center gap-2">
+						<button type="submit" class="btn btn-success">Create</button>
+						<button type="reset" class="btn btn-warning">Reset</button>
+					</div>
+
+				</form>
+
 			</div>
-			
-			 
+
+
 		</section>
-		
-		
+
+
 	</main>
-	
+
 </body>
 
 

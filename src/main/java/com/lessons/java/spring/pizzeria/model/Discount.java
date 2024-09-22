@@ -2,8 +2,6 @@ package com.lessons.java.spring.pizzeria.model;
 
 import java.time.LocalDateTime;
 
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,9 +12,6 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-
-
-
 //ENTITA' SCONTO;
 @Entity
 @Table(name = "discounts")
@@ -25,24 +20,24 @@ public class Discount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@NotNull
-	@Size(min=2, max=255)
+	@Size(min = 2, max = 255)
 	private String title;
-	
+
 	@NotNull
 	private LocalDateTime startDate;
-	
+
 	@NotNull
 	private LocalDateTime finishDate;
-	
+
 	// 1 - OGGETTO PER STABILIRE LA RELAZIONE CON L'ALTRA ENTITA';
 	// 2 - NOME DELLA COLONNA CHE FUNGERA' DA CHIAVE ESTERNA;
 	@ManyToOne
 	@JoinColumn(name = "pizza_id", nullable = false)
 	private Pizza pizza;
-	
-	//GETTER - SETTER
+
+	// GETTER - SETTER
 	public Integer getId() {
 		return id;
 	}
@@ -82,5 +77,5 @@ public class Discount {
 	public void setPizza(Pizza pizza) {
 		this.pizza = pizza;
 	}
-	
+
 }
